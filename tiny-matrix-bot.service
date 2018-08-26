@@ -2,10 +2,11 @@
 Description=tiny-matrix-bot
 
 [Service]
-User=tiny-matrix-bot
-Group=users
+User=matrixbot
+Group=matrixbot
 Environment=PYTHONUNBUFFERED=1
-ExecStart=/home/tiny-matrix-bot/tiny-matrix-bot/tiny-matrix-bot.py
+WorkingDirectory=/home/matrixbot/bots/tiny-matrix-bot
+ExecStart=python3 /home/matrixbot/bots/tiny-matrix-bot/tiny-matrix-bot.py
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=30

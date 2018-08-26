@@ -30,8 +30,15 @@ def callback(ch, method, properties, body):
     global server
 
     if len(body) > 1:
+        body = body.decode('utf-8')
         message = bytes(str(body),'utf-8')
-        server.sendall(message.decode("utf-8"))
+        server.sendall(message)
+
+        server.close()
+        time.sleep(3)
+
+        server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        server.connect(socketfile)
 
 
 channel.basic_consume(callback, queue=message_q, no_ack=True)
