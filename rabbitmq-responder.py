@@ -23,7 +23,7 @@ channel = connection.channel()
 
 channel.exchange_declare(exchange='bots', exchange_type='fanout')
 
-result = channel.queue_declare(queue=message_q, exclusive=True)
+result = channel.queue_declare(queue=message_q, exclusive=True, durable=True)
 channel.queue_bind(exchange='bots', queue=result.method.queue)
 
 def callback(ch, method, properties, body):
