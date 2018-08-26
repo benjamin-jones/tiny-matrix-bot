@@ -21,9 +21,9 @@ server.connect(socketfile)
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
 channel = connection.channel()
 
-channel.exchange_declare(exchange='bots', exchange_type='fanout')
+channel.exchange_declare(exchange='bots', exchange_type='fanout', durable=False)
 
-result = channel.queue_declare(queue=message_q, exclusive=True, durable=True)
+result = channel.queue_declare(queue=message_q, durable=True)
 channel.queue_bind(exchange='bots', queue=result.method.queue)
 
 def callback(ch, method, properties, body):
@@ -32,13 +32,8 @@ def callback(ch, method, properties, body):
     if len(body) > 1:
         message = bytes(str(body),'utf-8')
         server.sendall(message)
-        server.close()
 
 
 channel.basic_consume(callback, queue=message_q, no_ack=True)
 channel.start_consuming()
-
-
-
-
-
+server.close()

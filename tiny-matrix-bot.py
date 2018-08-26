@@ -161,8 +161,8 @@ class TinyMatrixtBot():
         while True:
             _conn, _addr = _socket.accept()
             _recv = _conn.recv(4096).decode('utf-8').strip()
-            logger.debug("recv {} {}".format(_socket_path, _recv))
-            room.send_text(_recv)
+            logger.info("recv {} {}".format(_socket_path, _recv))
+            room.send_text(''.join("%s" % _recv))
 
     def on_leave(self, room_id, state):
         _sender = "someone"
