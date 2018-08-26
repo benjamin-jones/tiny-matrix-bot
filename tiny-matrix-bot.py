@@ -35,7 +35,6 @@ class TinyMatrixtBot():
         else:
             logger.error("{} not readable".format(self.path_lib))
             sys.exit(1)
-
         self.path_var = self.config.get(
             "tiny-matrix-bot", "var",
             fallback=os.path.join(_path_current, "data")).strip()
@@ -113,11 +112,12 @@ class TinyMatrixtBot():
                 stdout=subprocess.PIPE,
                 universal_newlines=True
                 ).communicate()[0].strip()
+
             if not _regex:
                 continue
             _scripts[_regex] = _script_path
             logger.info("script {}".format(_script))
-            logger.debug("regex {}".format(_regex))
+            logger.info("regex {}".format(_regex))
         return _scripts
 
     def on_invite(self, room_id, state):
@@ -157,7 +157,7 @@ class TinyMatrixtBot():
         _socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         _socket.bind(_socket_path)
         _socket.listen(1)
-        logger.debug("socket {}".format(_socket_path))
+        logger.info("socket {}".format(_socket_path))
         while True:
             _conn, _addr = _socket.accept()
             _recv = _conn.recv(4096).decode('utf-8').strip()
@@ -180,6 +180,7 @@ class TinyMatrixtBot():
         if event["content"]["msgtype"] != "m.text":
             return
         _args = event["content"]["body"].strip()
+        logger.info("From room: %s" % _args)
         for _regex, _script in self.scripts.items():
             if not re.search(_regex, _args, re.IGNORECASE):
                 continue
