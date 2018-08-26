@@ -1,0 +1,15 @@
+[Unit]
+Description=rabbitmq-responder
+Wants=tiny-matrix-bot.service
+[Service]
+User=matrixbot
+Group=matrixbot
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=/home/matrixbot/bots/tiny-matrix-bot
+ExecStart=/usr/bin/python3 /home/matrixbot/bots/tiny-matrix-bot/rabbitmq-responder.py
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
