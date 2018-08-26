@@ -31,7 +31,7 @@ def callback(ch, method, properties, body):
 
     if len(body) > 1:
         message = bytes(str(body),'utf-8')
-        server.sendall(message)
+        server.sendall(message.decode("utf-8"))
 
 
 channel.basic_consume(callback, queue=message_q, no_ack=True)
