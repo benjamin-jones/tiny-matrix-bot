@@ -6,7 +6,7 @@ User=matrixbot
 Group=matrixbot
 Environment=PYTHONUNBUFFERED=1
 WorkingDirectory=/home/matrixbot/bots/tiny-matrix-bot
-ExecStart=python3 /home/matrixbot/bots/tiny-matrix-bot/tiny-matrix-bot.py
+ExecStart=/usr/bin/python3 /home/matrixbot/bots/tiny-matrix-bot/tiny-matrix-bot.py ../tiny-matrix-bot.cfg
 ExecReload=/bin/kill -HUP $MAINPID
 Restart=on-failure
 RestartSec=30
